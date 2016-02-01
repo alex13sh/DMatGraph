@@ -1,0 +1,17 @@
+INPUT(
+./release\main.o
+./release\mframeaddedge.o
+./release\mclass.o
+./release\mograph.o
+./release\mainwindow.o
+./release\edge.o
+./release\node.o
+./release\graph_graphicsview.o
+./release\mfileview.o
+./release\mtableview.o
+./release\moc_mframeaddedge.o
+./release\moc_mograph.o
+./release\moc_mainwindow.o
+./release\moc_graph_graphicsview.o
+./release\moc_mtableview.o
+);

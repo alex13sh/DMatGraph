@@ -1,0 +1,14 @@
+INPUT(
+./debug\edge.o
+./debug\main.o
+./debug\node.o
+./debug\mframeaddedge.o
+./debug\mclass.o
+./debug\mograph.o
+./debug\graph_graphicsview.o
+./debug\mainwindow.o
+./debug\moc_mframeaddedge.o
+./debug\moc_mograph.o
+./debug\moc_graph_graphicsview.o
+./debug\moc_mainwindow.o
+);

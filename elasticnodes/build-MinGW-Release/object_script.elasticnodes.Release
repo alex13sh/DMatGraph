@@ -1,0 +1,14 @@
+INPUT(
+./release\edge.o
+./release\main.o
+./release\node.o
+./release\mframeaddedge.o
+./release\mclass.o
+./release\mograph.o
+./release\graph_graphicsview.o
+./release\mainwindow.o
+./release\moc_mframeaddedge.o
+./release\moc_mograph.o
+./release\moc_graph_graphicsview.o
+./release\moc_mainwindow.o
+);
