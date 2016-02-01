@@ -106,22 +106,22 @@ void MGraph::addNode(){
     graph_change(esAddNode,arrN.count()-1);  // Говорим наследникам об изменениях в графе
 }
 
-void MGraph::addLink(int x, int y){
-    Q_ASSERT_X(x<arrN.size() && y<arrN.size(),"MGraph::addLink","index out of range");
-    for(int i=0;i<arrN[x].size();++i)
-        if(arrN[x][i].ind==y) return;
-    arrN[x].append(SLink(y));
-    graph_change(esAddEdge,x,SLink(y)); // Говорим наследникам об изменениях в графе
+void MGraph::addLink(int src, int dst){
+    Q_ASSERT_X(src<arrN.size() && dst<arrN.size(),"MGraph::addLink","index out of range");
+    for(int i=0;i<arrN[src].size();++i)
+        if(arrN[src][i].ind==dst) return;
+    arrN[src].append(SLink(dst));
+    graph_change(esAddEdge,src,SLink(dst)); // Говорим наследникам об изменениях в графе
 }
 
-const MGraph::SLink &MGraph::link(int x, int y) const{
-    Q_ASSERT_X(x<arrN.size() && y<arrN.size(),"MGraph::link","index out of range");
-    const QVector <SLink> &arrL1=arrN[x];
+const MGraph::SLink &MGraph::link(int src, int dst) const{
+    Q_ASSERT_X(src<arrN.size() && dst<arrN.size(),"MGraph::link","index out of range");
+    const QVector <SLink> &arrL1=arrN[src];
     for (int i=0;i<arrL1.size();++i)
-        if(arrL1.at(i).ind==y) return arrL1.at(i);
-    const QVector <SLink> &arrL2=arrN[x];
+        if(arrL1.at(i).ind==dst) return arrL1.at(i);
+    const QVector <SLink> &arrL2=arrN[src];
     for (int i=0;i<arrL2.size();++i)
-        if(arrL2.at(i).ind==x) return arrL2.at(i);
+        if(arrL2.at(i).ind==src) return arrL2.at(i);
     return SLink(0);
 }
 
@@ -140,17 +140,17 @@ QVector<QVector<int> > MGraph::getMatrixS(){
     return res;
 }
 
-void MGraph::swap(int x, int y){
-    Q_ASSERT_X(x<arrN.size() && y<arrN.size(),"MGraph::swap","index out of range");
-    QVector<SLink> &tmp=arrN[x];
-    arrN[x]=arrN[y]; arrN[y]=tmp;
-    graph_change(esChangeNodes,x); graph_change(esChangeNodes,y);
+void MGraph::swap(int src, int dst){
+    Q_ASSERT_X(src<arrN.size() && dst<arrN.size(),"MGraph::swap","index out of range");
+    QVector<SLink> &tmp=arrN[src];
+    arrN[src]=arrN[dst]; arrN[dst]=tmp;
+    graph_change(esChangeNodes,src); graph_change(esChangeNodes,dst);
 }
 
-MGraph::SLink *MGraph::linkP(int x, int y){
-    Q_ASSERT_X(x<arrN.size() && y<arrN.size(),"MGraph::linkP","index out of range");
-     QVector <SLink> *arrL=&arrN[x];
-    for (int i=0;i<arrL->size();++i)    if(arrL->at(i).ind==y)  return arrL->begin()+i;
+MGraph::SLink *MGraph::linkP(int src, int dst){
+    Q_ASSERT_X(src<arrN.size() && dst<arrN.size(),"MGraph::linkP","index out of range");
+     QVector <SLink> *arrL=&arrN[src];
+    for (int i=0;i<arrL->size();++i)    if(arrL->at(i).ind==dst)  return arrL->begin()+i;
     return 0;
 }
 
@@ -166,15 +166,15 @@ void MGraph::selectLinks(const MGraph_Ind &mgi){
     graph_selectLinks(arrSourc,arrDest);
 }
 
-void MGraph::creat_fmost(){
+//void MGraph::creat_fmost(){ // Создавал граф с мостом.  Теперь не нужен, т.к. я уже научился сохранять и открывать файлы с графами
 
-    if(arrN.size()<8)arrN.resize(8);
-    arrN[0].append(1); arrN[2].append(0); arrN[1].append(2);
-    arrN[3].append(4); arrN[5].append(3); arrN[4].append(5);
-    arrN[2].append(3);
-    arrN[5].append(6); arrN[0].append(7);
-    graph_change(esChangeGraph);
-}
+//    if(arrN.size()<8)arrN.resize(8);
+//    arrN[0].append(1); arrN[2].append(0); arrN[1].append(2);
+//    arrN[3].append(4); arrN[5].append(3); arrN[4].append(5);
+//    arrN[2].append(3);
+//    arrN[5].append(6); arrN[0].append(7);
+//    graph_change(esChangeGraph);
+//}
 
 //#include <QStack>
 #include <QQueue>
@@ -306,11 +306,11 @@ void MGraph::DFS(int ind, Compare func, bool rest){
 
 }
 
-int MGraph::linkInd(int x, int y){
-    Q_ASSERT_X(x<arrN.size() && y<arrN.size(),"Node::at","index out of range");
-     QVector <SLink> &arrL=arrN[x];
+int MGraph::linkInd(int src, int dst){
+    Q_ASSERT_X(src<arrN.size() && dst<arrN.size(),"Node::at","index out of range");
+     QVector <SLink> &arrL=arrN[src];
     for (int i=0;i<arrL.size();++i)
-        if(arrL.at(i).ind==y) return i;
+        if(arrL.at(i).ind==dst) return i;
     return -1;
 }
 
